@@ -25,8 +25,8 @@
 ##
 ##   Improvements;
 ##
-##     - Download the file specific location using urllib or wget
-##     - Install the sensor within the same script
+##     - Download the file to a specific location using urllib or wget
+##     - Install the sensor within the same script us using OS subprocess
 ##     - Run the Carbon Black installer
 ##         https://community.carbonblack.com/t5/Knowledge-Base/Carbon-Black-Cloud-How-to-Perform-an-Unattended-Installation-of/ta-p/65874
 ##         Replace 'your_msi_file.msi' with the actual MSI file name
@@ -36,15 +36,14 @@
 ##         Run the MSI executable with the silent installation switch
 ##         subprocess.call(['msiexec', '/i', msi_file, silent_switch])
 ##         msiexec.exe /q /i <Sensor Installer Path> /L*v msi.log COMPANY_CODE="XYZABC" CLI_USERS=<UserGroupSid> POLICY_NAME="<NAME Virtual Policy>"
-
 ##     - Automatically detect the Operating System and download the correct sensor using  the platform libary.
 ##        import platform
 ##        platform.system(),platform.architecture()
 ##     - Set the expiry automatically + 30 mins
-
-## Version Control
 ##
-## 28.12.2023 - Basic version 
+##     Version Control
+##
+##     28.12.2023 - Basic version 
 
 
 
