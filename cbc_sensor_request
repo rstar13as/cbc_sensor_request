@@ -35,7 +35,7 @@
 ##         silent_switch = '/qn'
 ##         Run the MSI executable with the silent installation switch
 ##         subprocess.call(['msiexec', '/i', msi_file, silent_switch])
-##         msiexec.exe /q /i <Sensor Installer Path> /L*v msi.log COMPANY_CODE="XYZABC" CLI_USERS=<UserGroupSid> POLICY_NAME="<NAME Virtual Policy>"
+##         msiexec.exe /q /i <Sensor Installer Path> /L*v msi.log COMPANY_CODE="XYZABC" CLI_USERS=<UserGroupSid> POLICY_NAME="<NAME Virtual Policy>" CONFIGFILE="C:\Path\To\config-blob.ini"
 ##     - Automatically detect the Operating System and download the correct sensor using  the platform libary.
 ##        import platform
 ##        platform.system(),platform.architecture()
