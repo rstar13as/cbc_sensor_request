@@ -1,1 +1,1 @@
-# cbc_sensor_request
+# Download Carbon Black Cloud Sensor via API and Install it. 
