@@ -1,0 +1,107 @@
+##   Written by Roshan Ratnayake @detectx.com.au
+##
+##   Purpose: 
+##
+##    Automatically download Carbon Black Cloud Sensor and install the sensor.
+##
+##   Usage;
+##    
+##     You will need to manaualy identify the requred Sensor and update the variables with your APIs below.
+##
+##   Reference:
+##     - Get Sensor Kit and Configuration Links - https://developer.carbonblack.com/reference/carbon-black-cloud/workload-protection/latest/sensor-lifecycle-management/#get-sensor-kit-and-configuration-links
+##     - Check Sensor versions here - https://docs.vmware.com/en/VMware-Carbon-Black-Cloud/index.html
+##     - Use the following URL
+##       EAP01: https://defense-eap01.conferdeploy.net
+##       Prod 01: https://dashboard.confer.net
+##       Prod 02: https://defense.conferdeploy.net
+##       Prod 05: https://defense-prod05.conferdeploy.net
+##       Prod 06: https://defense-eu.conferdeploy.net
+##       Prod NRT: https://defense-prodnrt.conferdeploy.net
+##       Prod Syd: https://defense-prodsyd.conferdeploy.net
+##       Prod UK: https://ew2.carbonblackcloud.vmware.com
+##       AWS GovCloud (US): https://gprd1usgw1.carbonblack-us-gov.vmware.com
+##    - Postman - https://www.postman.com/vmware-carbon-black/workspace/vmware-carbon-black/request/28313458-9ac920b7-ee83-4125-965d-b45baf6480b5?ctx=documentation
+##
+##   Improvements;
+##
+##     - Download the file specific location using urllib or wget
+##     - Install the sensor within the same script
+##     - Run the Carbon Black installer
+##         https://community.carbonblack.com/t5/Knowledge-Base/Carbon-Black-Cloud-How-to-Perform-an-Unattended-Installation-of/ta-p/65874
+##         Replace 'your_msi_file.msi' with the actual MSI file name
+##         msi_file = 'your_msi_file.msi'
+##         Replace '/qn' with the actual silent installation switch
+##         silent_switch = '/qn'
+##         Run the MSI executable with the silent installation switch
+##         subprocess.call(['msiexec', '/i', msi_file, silent_switch])
+##         msiexec.exe /q /i <Sensor Installer Path> /L*v msi.log COMPANY_CODE="XYZABC" CLI_USERS=<UserGroupSid> POLICY_NAME="<NAME Virtual Policy>"
+
+##     - Automatically detect the Operating System and download the correct sensor using  the platform libary.
+##        import platform
+##        platform.system(),platform.architecture()
+##     - Set the expiry automatically + 30 mins
+
+## Version Control
+##
+## 28.12.2023 - Basic version 
+
+
+
+
+import requests
+import webbrowser
+import json
+
+def download_sensor(url, org_id, x_auth_token, device_type, architecture, sensor_type, version, expires_at):
+    headers = {
+        'x-auth-token': x_auth_token,
+    }
+
+    data = {
+        "sensor_types": [
+            {
+                "device_type": device_type,
+                "architecture": architecture,
+                "type": sensor_type,
+                "version": version
+            }
+        ],
+        "expires_at": expires_at
+    }
+
+    files = {
+        'sensor_url_request': (None, json.dumps(data), 'application/json'),
+    }
+
+    endpoint = f'{url}/lcm/v1/orgs/{org_id}/sensor/_download'
+
+    response = requests.post(endpoint, headers=headers, files=files)
+
+    if response.status_code == 200:
+        response_data = response.json()
+
+        sensor_url = response_data['sensor_infos'][0]['sensor_url']
+        sensor_config_url = response_data['sensor_infos'][0]['sensor_config_url']
+
+        return sensor_url, sensor_config_url
+    else:
+        return f"Error: {response.status_code} - {response.json()}"
+
+# Example usage:
+url = 'https://defense-prodsyd.conferdeploy.net'
+org_id = ''
+x_auth_token = '' # This is tricky, this is a combination of your API ID and API Secret Key with / in between, eg. XXX/XXXX
+device_type = 'WINDOWS'
+architecture = '64'
+sensor_type = 'WINDOWS'
+version = '4.0.0.1292'
+expires_at = '2024-06-05T23:39:52Z'
+
+sensor_url, sensor_config_url = download_sensor(url, org_id, x_auth_token, device_type, architecture, sensor_type, version, expires_at)
+
+print("Sensor URL:", sensor_url)
+print("Sensor Config URL:", sensor_config_url)
+
+webbrowser.open(sensor_url)
+webbrowser.open(sensor_config_url)
