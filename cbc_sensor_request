@@ -27,6 +27,8 @@
 ##
 ##     - Download the file to a specific location using urllib or wget
 ##     - Install the sensor within the same script us using OS subprocess
+##            import os
+##            os.system(‘terraform plan’)
 ##     - Run the Carbon Black installer
 ##         https://community.carbonblack.com/t5/Knowledge-Base/Carbon-Black-Cloud-How-to-Perform-an-Unattended-Installation-of/ta-p/65874
 ##         Replace 'your_msi_file.msi' with the actual MSI file name
