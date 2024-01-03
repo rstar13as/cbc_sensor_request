@@ -8,7 +8,7 @@ Automatically download Carbon Black Cloud Sensor and install the sensor.
 
 ##   Usage;
 
-You will need to manaualy identify the requred Sensor and update the variables with your APIs below.
+You will need to manaualy identify the required Sensor and update the variables with your APIs below.
 
 ##   Reference:
 - Get Sensor Kit and Configuration Links - https://developer.carbonblack.com/reference/carbon-black-cloud/workload-protection/latest/sensor-lifecycle-management/#get-sensor-kit-and-configuration-links
