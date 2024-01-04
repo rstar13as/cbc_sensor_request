@@ -40,8 +40,12 @@ subprocess.call(['msiexec', '/i', msi_file, silent_switch])
 msiexec.exe /q /i <Sensor Installer Path> /L*v msi.log COMPANY_CODE="XYZABC" CLI_USERS=<UserGroupSid> POLICY_NAME="<NAME Virtual Policy>"
 - Automatically detect the Operating System and download the correct sensor using  the platform libary.
 import platform platform.system(),platform.architecture()
-
+- Add info to identify VPN IP using Audit logs
+- Add instructions to create API access level.
+- Use Phython SDK
+- Use File Write to download file.
 - Set the expiry automatically + 30 mins
+- Create a Powershell version for Windows Machines
 
 ##     Version Control
 
